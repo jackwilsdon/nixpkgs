@@ -30,8 +30,7 @@ buildPythonPackage rec {
     hash = "sha256-zfjcXQCXysG+JMw00YES/GQk/yjHH9kCksb9SlZt9wo=";
   };
 
-  nativeBuildInputs = [ pkg-config ];
-  propagatedNativeBuildInputs = [ cffi ];
+  nativeBuildInputs = [ cffi pkg-config ];
   buildInputs = [ libinput libxkbcommon pixman xorg.libxcb xorg.xcbutilwm udev wayland wlroots ];
   propagatedBuildInputs = [ cffi pywayland xkbcommon ];
   nativeCheckInputs = [ pytestCheckHook ];
