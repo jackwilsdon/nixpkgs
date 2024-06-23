@@ -9,6 +9,7 @@ let
       else lib.concatMapStrings (s: "\n  ${generators.mkValueStringDefault {} s}") l;
     mkKeyValue = generators.mkKeyValueDefault { } ":";
   };
+  configFile = if cfg.settings != null then format.generate "klipper.cfg" cfg.settings else cfg.configFile;
 in
 {
   ##### interface
@@ -148,7 +149,7 @@ in
     ];
 
     environment.etc = mkIf (!cfg.mutableConfig) {
-      "klipper.cfg".source = if cfg.settings != null then format.generate "klipper.cfg" cfg.settings else cfg.configFile;
+      "klipper.cfg".source = configFile;
     };
 
     services.klipper = mkIf cfg.octoprintIntegration {
@@ -205,6 +206,8 @@ in
           DynamicUser = true;
           User = "klipper";
         });
+
+        restartTriggers = lib.optional (!cfg.mutableConfig) configFile;
       };
 
     environment.systemPackages =
