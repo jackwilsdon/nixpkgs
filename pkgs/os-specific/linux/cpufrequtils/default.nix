@@ -1,12 +1,12 @@
-{ lib, stdenv, fetchurl, libtool, gettext }:
+{ lib, stdenv, fetchzip, libtool, gettext }:
 
 stdenv.mkDerivation rec {
   pname = "cpufrequtils";
   version = "008";
 
-  src = fetchurl {
+  src = fetchzip {
     url = "http://ftp.be.debian.org/pub/linux/utils/kernel/cpufreq/cpufrequtils-${version}.tar.gz";
-    hash = "sha256-AFOgcYPQaUg70GJhS8YcuAgMV32mHN9+ExsGThoa8Yg=";
+    hash = "sha256-Dy5Ba6JrelkGPAR0f2tuZaDUQPScTE3KaA8jjz8wUq8=";
   };
 
   patches = [
