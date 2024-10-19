@@ -3,11 +3,13 @@
   buildPythonPackage,
   fetchFromGitHub,
   pythonOlder,
+  python,
 
   # build
   meson,
   meson-python,
   ninja,
+  nukeReferences,
   pybind11,
 
   # propagates
@@ -43,6 +45,7 @@ let
       meson
       meson-python
       ninja
+      nukeReferences
       pybind11
     ];
 
@@ -63,6 +66,11 @@ let
       pillow
       pytestCheckHook
     ];
+
+    postInstall = ''
+      find $out/${python.sitePackages}/contourpy -name __pycache__ -type d -exec rm -rf {} +
+      nuke-refs $out/${python.sitePackages}/contourpy/util/_build_config.py
+    '';
 
     passthru.tests = {
       check = contourpy.overridePythonAttrs (_: {
